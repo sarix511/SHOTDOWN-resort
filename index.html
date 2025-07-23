@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matrix Error</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      display: none;
+    }
+
+    .message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #00ff00;
+      font-size: 2rem;
+      text-align: center;
+      z-index: 1;
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+      animation: glow 2s ease-in-out infinite alternate;
+      display: none;
+    }
+
+    .message span {
+      display: block;
+      margin-top: 15px;
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+      }
+      to {
+        text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
+      }
+    }
+
+    .start-btn {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      color: #00ff00;
+      font-size: 2rem;
+      border: none;
+      font-family: 'Share Tech Mono', monospace;
+      cursor: pointer;
+      z-index: 9999;
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+  </style>
+</head>
+<body>
+  <!-- Start Button -->
+  <button class="start-btn" onclick="startExperience()">START WEBSITE</button>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="https://media.vocaroo.com/mp3/1ljADg4qned6" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Matrix Canvas -->
+  <canvas id="matrixCanvas"></canvas>
+
+  <!-- Center Message -->
+  <div class="message" id="messageText">
+    SARIM IS DIED 💔
+    <span> WE WILL CONTINUE OUR WORK SOON GYZ SO PRAY PLEASE</span>
+  </div>
+
+  <script>
+    function startExperience() {
+      // Hide start button
+      document.querySelector('.start-btn').style.display = 'none';
+
+      // Show canvas and message
+      document.getElementById('matrixCanvas').style.display = 'block';
+      document.getElementById('messageText').style.display = 'block';
+
+      // Play background music
+      const music = document.getElementById('bgMusic');
+      music.volume = 0.5; // optional: adjust volume
+      music.play();
+
+      // Start Matrix Animation
+      const canvas = document.getElementById("matrixCanvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+
+      const letters = "01";
+      const fontSize = 16;
+      const columns = canvas.width / fontSize;
+      const drops = Array(Math.floor(columns)).fill(1);
+
+      function drawMatrix() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#00FF00";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = letters.charAt(Math.floor(Math.random() * letters.length));
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+
+          drops[i]++;
+        }
+      }
+
+      setInterval(drawMatrix, 100);
+    }
+  </script>
+</body>
+</html>
