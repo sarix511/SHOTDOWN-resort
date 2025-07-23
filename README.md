@@ -1,1 +1,0 @@
-# SHOTDOWN-resort
